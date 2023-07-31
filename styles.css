@@ -28,6 +28,7 @@
     justify-content: space-between;
     color: white;
     gap: 24px;
+    padding: 12px;
 }
 
 .status{
@@ -58,9 +59,30 @@
 }
 
 .small-numbers{
-    width: 60px;
+    width: 50px;
 }
 
 .role-settings, .color-settings{
     margin: 12px;
+}
+
+.stat-button{
+    display: flex;
+    padding: 10px 18px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 8px;
+    margin: 12px 0px;
+}
+
+.dropdown{
+    display: flex;
+    padding: 10px 18px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 8px;
 }
