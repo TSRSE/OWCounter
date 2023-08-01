@@ -112,7 +112,7 @@ function switchRank(index){
     let activeRank = document.getElementById(`rank-tier-dropdown-${index}`);
     let icon = document.getElementById(`icon-${index}`);
     var text = activeRank.options[activeRank.selectedIndex].text;
-    icon.src = '../src/rank-icons/' + RANK_LIST.get(`${text}`);
+    icon.src = 'src/rank-icons/' + RANK_LIST.get(`${text}`);
 
     let rankDivision = document.getElementById(`rank-division-dropdown-${index}`);
     rankName.textContent = `${activeRank.options[activeRank.selectedIndex].text} ${rankDivision[rankDivision.selectedIndex].text}`;
