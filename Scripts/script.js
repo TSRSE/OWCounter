@@ -7,7 +7,7 @@ const RANK_LIST = new Map([
     ['Master', 'Master.svg'],
     ['Grand master', 'GM.svg'],
     ['Top500', 'Top.svg']
-]);
+]); //Enumerator like map
 
 
 const MAX_WIN = 5;
@@ -16,15 +16,15 @@ var CREATED_VARIABLES = []; //Object like arrays of variables for #displayStatus
 createInterface();
 
 function createInterface(){
-    pasteRole("Support", 1);
-    pasteRole("Tank", 2);
-    pasteRole("DPS", 3);
-    createVariablesForDisplay("Support", 1);
-    createVariablesForDisplay("Tank", 2);
-    createVariablesForDisplay("DPS", 3);
+    pasteDisplayRole("Support", 1);
+    pasteDisplayRole("Tank", 2);
+    pasteDisplayRole("DPS", 3);
+    createVariablesForDisplayRole("Support", 1);
+    createVariablesForDisplayRole("Tank", 2);
+    createVariablesForDisplayRole("DPS", 3);
 }
 
-function createVariablesForDisplay(roleName, index){
+function createVariablesForDisplayRole(roleName, index){
 
     let b = document.getElementById('role-settings');
     let a = `<div class="role">
@@ -54,7 +54,7 @@ function createVariablesForDisplay(roleName, index){
         </div>
         <div class="played container">
             <div class="text">Played</div>
-            <input type="text" name="" id="" placeholder="ass" class="small-numbers">
+            <input type="text" name="" id="total-played-${index}" placeholder="ass" class="small-numbers" oninput="this.value = this.value.replace(/[^0-9]/g, '')"> [TODO: oninput="this.value = this.value.replace(/[^0-9]/g, '') to function]
         </div>   
     </div>
     <div class="container">
@@ -69,12 +69,13 @@ function createVariablesForDisplay(roleName, index){
             "Division" : document.getElementById(`rank-division-dropdown-${index}`),
             "InputField" : document.getElementById(`win-input-${index}`),
             "WinButton" : document.getElementById(`win-button-${index}`),
-            "lostButton" : document.getElementById(`lost-button-${index}`)
+            "LostButton" : document.getElementById(`lost-button-${index}`),
+            "TotalGames" : document.getElementById(`total-played-${index}`)
         }
     );
 }
 
-function pasteRole(roleName, index){
+function pasteDisplayRole(roleName, index){
     let a = document.getElementById('Display');
     let htmlBlock = `<div class="content">
     <div class="role-name">${roleName}</div>
@@ -88,17 +89,30 @@ function pasteRole(roleName, index){
     a.innerHTML = a.innerHTML + htmlBlock;
 }
 
-function assignFunctions(){
+function assignFunctions(index){
+
     return null;
 }
 
+//=======TEMP=======
 const temp = document.getElementById('rank-tier-dropdown-1');
 temp.onchange = () => switchRank(1);
+//=======TEMP=======
 
+//Assigned to Role Rank DropDown
 function switchRank(index){
     let activeRank = document.getElementById(`rank-tier-dropdown-${index}`);
     let icon = document.getElementById(`icon-${index}`);
-    var value = activeRank.value;
     var text = activeRank.options[activeRank.selectedIndex].text;
     icon.src = '../src/rank-icons/' + RANK_LIST.get(`${text}`);
+}
+
+addGameToPlayed(1, null)
+function addGameToPlayed(index, state){
+
+    console.log(CREATED_VARIABLES[index])
+    CREATED_VARIABLES[index].TotalGames;
+    if(state == 'win'){
+
+    }
 }
