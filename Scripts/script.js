@@ -49,7 +49,7 @@ function createVariablesForDisplayRole(roleName, index){
         </select>
         <div class="wins container">
             <div class="text">Wins</div>
-            <input type="text" name="" id="win-input-${index}" placeholder="ass" class="small-numbers">
+            <input type="text" name="" id="win-input-${index}" placeholder="ass" class="small-numbers" value="hell">
             <div class="text">/${MAX_WIN}</div>
         </div>
         <div class="played container">
@@ -67,7 +67,7 @@ function createVariablesForDisplayRole(roleName, index){
         {
             "Tier" : document.getElementById(`rank-tier-dropdown-${index}`),
             "Division" : document.getElementById(`rank-division-dropdown-${index}`),
-            "InputField" : document.getElementById(`win-input-${index}`),
+            "WinField" : document.getElementById(`win-input-${index}`),
             "WinButton" : document.getElementById(`win-button-${index}`),
             "LostButton" : document.getElementById(`lost-button-${index}`),
             "TotalGames" : document.getElementById(`total-played-${index}`)
@@ -107,7 +107,31 @@ function switchRank(index){
     icon.src = '../src/rank-icons/' + RANK_LIST.get(`${text}`);
 }
 
-addGameToPlayed(1, null)
+variablesLinking(1);
+
+function variablesLinking(index){
+    // WinStatusLinking
+        let winInput = document.getElementById(`win-input-${index}`);
+
+        let winLabel = document.getElementById(`stats-${index}`);
+        
+        winInput.onchange = () => winLabel.textContent = winInput.value
+    // =================
+
+    // TotalPlayedLinking
+        let totalInput = document.getElementById(`total-played-${index}`);
+
+        let totalLabel = document.getElementById(`total-${index}`);
+
+        totalInput.onchange = () => totalLabel.textContent = 'Played ' + totalInput.value
+    // =================
+
+    // WinLostButtons linking
+        
+    // =================
+}
+
+//TODO
 function addGameToPlayed(index, state){
 
     console.log(CREATED_VARIABLES[index])
