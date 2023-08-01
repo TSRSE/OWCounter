@@ -1,5 +1,3 @@
-//import { pasteRole } from './Modules/DisplayStats.js';
-
 const RANK_LIST = new Map([
     ['Bronze', 'Bronze.svg'],
     ['Silver', 'Silver.svg'],
@@ -7,16 +5,15 @@ const RANK_LIST = new Map([
     ['Platinum', 'Platinum.svg'],
     ['Diamond', 'Diamond.svg'],
     ['Master', 'Master.svg'],
-    ['Grand Master', 'GM.svg'],
+    ['Grand master', 'GM.svg'],
     ['Top500', 'Top.svg']
 ]);
 
-var CREATED_VARIABLES = [];
+
+const MAX_WIN = 5;
+var CREATED_VARIABLES = []; //Object like arrays of variables for #displayStatusSettings
 
 createInterface();
-
-
-console.log(CREATED_VARIABLES);
 
 function createInterface(){
     pasteRole("Support", 1);
@@ -53,7 +50,7 @@ function createVariablesForDisplay(roleName, index){
         <div class="wins container">
             <div class="text">Wins</div>
             <input type="text" name="" id="win-input-${index}" placeholder="ass" class="small-numbers">
-            <div class="text">/5</div>
+            <div class="text">/${MAX_WIN}</div>
         </div>
         <div class="played container">
             <div class="text">Played</div>
@@ -66,7 +63,6 @@ function createVariablesForDisplay(roleName, index){
     </div>
     </div>`;
     b.innerHTML += a;
-    //Tier, rank
     CREATED_VARIABLES.push(
         {
             "Tier" : document.getElementById(`rank-tier-dropdown-${index}`),
@@ -80,32 +76,29 @@ function createVariablesForDisplay(roleName, index){
 
 function pasteRole(roleName, index){
     let a = document.getElementById('Display');
-    // console.log('Before: ' + a.innerHTML);
     let htmlBlock = `<div class="content">
     <div class="role-name">${roleName}</div>
     <div class="status" id='status-${index}'>
         <img src="src/rank-icons/GM.svg" alt="rank" class="icon" id="icon-${index}">
         <div class="rank-name text" id="rank-name-${index}">RankName</div>
-        <div class="stats text" id="stats-${index}">win 0/5</div>
+        <div class="stats text" id="stats-${index}">win 0/${MAX_WIN}</div>
         <div class="total text" id="total-${index}">Played 0</div>
     </div>
     </div>`;
     a.innerHTML = a.innerHTML + htmlBlock;
 }
 
-const MAX_WIN = 5;
-
-const WINS_TEXT_FIELD = null;
-const WIN_TEXT = null;
-
-// let win_button = document.getElementById('win-button-1');
-// win_button.onclick = () => winClick();
-
-function winResetter(){
-    WINS_TEXT_FIELD >= MAX_WIN ? WINS_TEXT_FIELD = 0 : WINS_TEXT_FIELD = self;
+function assignFunctions(){
+    return null;
 }
-let index = 0;
-function winClick(){
-    index++;
-    pasteRole('Support', index.toString());
+
+const temp = document.getElementById('rank-tier-dropdown-1');
+temp.onchange = () => switchRank(1);
+
+function switchRank(index){
+    let activeRank = document.getElementById(`rank-tier-dropdown-${index}`);
+    let icon = document.getElementById(`icon-${index}`);
+    var value = activeRank.value;
+    var text = activeRank.options[activeRank.selectedIndex].text;
+    icon.src = '../src/rank-icons/' + RANK_LIST.get(`${text}`);
 }
