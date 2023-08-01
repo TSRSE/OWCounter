@@ -22,6 +22,11 @@ function createInterface(){
     createVariablesForDisplayRole("Support", 1);
     createVariablesForDisplayRole("Tank", 2);
     createVariablesForDisplayRole("DPS", 3);
+    for (let index = 1; index < 4; index++) {
+        variablesLinking(index);
+        switchRank(index)
+    }
+    
 }
 
 function createVariablesForDisplayRole(roleName, index){
@@ -46,15 +51,16 @@ function createVariablesForDisplayRole(roleName, index){
             <option value="3">3</option>
             <option value="4">4</option>
             <option value="5">5</option>
+            <option value="6"></option>
         </select>
         <div class="wins container">
             <div class="text">Wins</div>
-            <input type="text" name="" id="win-input-${index}" placeholder="ass" class="small-numbers" value="hell">
+            <input type="text" name="" id="win-input-${index}" placeholder="0" class="small-numbers" value="">
             <div class="text">/${MAX_WIN}</div>
         </div>
         <div class="played container">
             <div class="text">Played</div>
-            <input type="text" name="" id="total-played-${index}" placeholder="ass" class="small-numbers" oninput="this.value = this.value.replace(/[^0-9]/g, '')"> [TODO: oninput="this.value = this.value.replace(/[^0-9]/g, '') to function]
+            <input type="text" name="" id="total-played-${index}" placeholder="0" class="small-numbers">
         </div>   
     </div>
     <div class="container">
@@ -82,7 +88,7 @@ function pasteDisplayRole(roleName, index){
     <div class="status" id='status-${index}'>
         <img src="src/rank-icons/GM.svg" alt="rank" class="icon" id="icon-${index}">
         <div class="rank-name text" id="rank-name-${index}">RankName</div>
-        <div class="stats text" id="stats-${index}">win 0/${MAX_WIN}</div>
+        <div class="stats text" id="stats-${index}">Win 0/${MAX_WIN}</div>
         <div class="total text" id="total-${index}">Played 0</div>
     </div>
     </div>`;
@@ -95,27 +101,46 @@ function assignFunctions(index){
 }
 
 //=======TEMP=======
-const temp = document.getElementById('rank-tier-dropdown-1');
-temp.onchange = () => switchRank(1);
+// const temp = document.getElementById('rank-tier-dropdown-1');
+// temp.onchange = () => switchRank(1);
 //=======TEMP=======
 
 //Assigned to Role Rank DropDown
 function switchRank(index){
+    let rankName = document.getElementById(`rank-name-${index}`);
+    
     let activeRank = document.getElementById(`rank-tier-dropdown-${index}`);
     let icon = document.getElementById(`icon-${index}`);
     var text = activeRank.options[activeRank.selectedIndex].text;
     icon.src = '../src/rank-icons/' + RANK_LIST.get(`${text}`);
+
+    let rankDivision = document.getElementById(`rank-division-dropdown-${index}`);
+    rankName.textContent = `${activeRank.options[activeRank.selectedIndex].text} ${rankDivision[rankDivision.selectedIndex].text}`;
 }
 
-variablesLinking(1);
+
 
 function variablesLinking(index){
+    // RankDropDownLinking
+    let temp = document.getElementById(`rank-tier-dropdown-${index}`);
+    temp.onchange = () => switchRank(index);
+
+    let rankDivision = document.getElementById(`rank-division-dropdown-${index}`)
+    rankDivision.onchange = () => switchRank(index);
+
+    // ================
+
     // WinStatusLinking
         let winInput = document.getElementById(`win-input-${index}`);
 
         let winLabel = document.getElementById(`stats-${index}`);
         
-        winInput.onchange = () => winLabel.textContent = winInput.value
+        winInput.oninput = () => winInput.value = winInput.value.replace(/[^0-9]/g, '');
+
+        winInput.onchange = () => {
+            winInput.value < MAX_WIN ? winInput.value : winInput.value = 0;
+            winLabel.textContent = `Win ${winInput.value}/${MAX_WIN}`;
+        }
     // =================
 
     // TotalPlayedLinking
@@ -123,20 +148,44 @@ function variablesLinking(index){
 
         let totalLabel = document.getElementById(`total-${index}`);
 
-        totalInput.onchange = () => totalLabel.textContent = 'Played ' + totalInput.value
+        totalInput.oninput = () => totalInput.value = totalInput.value.replace(/[^0-9]/g, '');
+
+        totalInput.onchange = () => totalLabel.textContent = 'Played ' + totalInput.value;
     // =================
 
     // WinLostButtons linking
-        
+        let winButton = document.getElementById(`win-button-${index}`);
+
+        winButton.onclick = () => addGameToPlayed(index, 'win');
+
+        let lostButton = document.getElementById(`lost-button-${index}`);
+
+        lostButton.onclick = () => addGameToPlayed(index, null);
     // =================
 }
 
 //TODO
 function addGameToPlayed(index, state){
+    // WinStatusLinking
+    let winInput = document.getElementById(`win-input-${index}`);
 
-    console.log(CREATED_VARIABLES[index])
-    CREATED_VARIABLES[index].TotalGames;
+    let winLabel = document.getElementById(`stats-${index}`);
+// =================
+
+// TotalPlayedLinking
+    let totalInput = document.getElementById(`total-played-${index}`);
+
+    let totalLabel = document.getElementById(`total-${index}`);
+// =================
+
+    totalInput.value++;
+    totalLabel.textContent = 'Played ' + totalInput.value;
+
+    
     if(state == 'win'){
-
+        winInput.value < MAX_WIN ? winInput.value++ : winInput.value = 0;
+        winLabel.textContent = `Win ${winInput.value}/${MAX_WIN}`;
     }
+
+
 }
