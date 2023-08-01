@@ -106,7 +106,6 @@ function winResetter(){
 }
 let index = 0;
 function winClick(){
-    //alert('wow!');
     index++;
     pasteRole('Support', index.toString());
 }
