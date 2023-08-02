@@ -35,7 +35,7 @@ function createVariablesForDisplayRole(roleName, index){
     let a = `<div class="role">
     <div class="role-name">${roleName}</div>
     <div class="container">
-        <select name="rank-tier" id="rank-tier-dropdown-${index}" class="dropdown">
+        <select name="rank-tier" id="rank-tier-dropdown-${index}" class="dropdown input-colors">
             <option value="Bronze">Bronze</option>
             <option value="Silver">Silver</option>
             <option value="Gold">Gold</option>
@@ -45,7 +45,7 @@ function createVariablesForDisplayRole(roleName, index){
             <option value="GrandMaster">Grand master</option>
             <option value="Top">Top500</option>
         </select>
-        <select name="rank-state" id="rank-division-dropdown-${index}" class="dropdown small-numbers">
+        <select name="rank-state" id="rank-division-dropdown-${index}" class="dropdown small-numbers input-colors">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -55,12 +55,12 @@ function createVariablesForDisplayRole(roleName, index){
         </select>
         <div class="wins container">
             <div class="text">Wins</div>
-            <input type="text" name="" id="win-input-${index}" placeholder="0" class="small-numbers" value="">
+            <input type="text" name="" id="win-input-${index}" placeholder="0" class="small-numbers input-colors" value="">
             <div class="text">/${MAX_WIN}</div>
         </div>
         <div class="played container">
             <div class="text">Played</div>
-            <input type="text" name="" id="total-played-${index}" placeholder="0" class="small-numbers">
+            <input type="text" name="" id="total-played-${index}" placeholder="0" class="small-numbers input-colors">
         </div>   
     </div>
     <div class="container">

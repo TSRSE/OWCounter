@@ -1,11 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+:root{
+    --background-color: #262D36;
+    --text-color: #D9E5F4;
+    --primary-dark: #191E25;
+    --primary-input: #2D3540;
+}
 
 *{
     margin: 0px;
     padding: 0px;
     border: solid 0px red;
     font-family: 'Montserrat', sans-serif;
+}
+
+body{
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 .main-area{
@@ -20,15 +31,16 @@
 }
 
 .display{
-    background-color: rgb(0, 0, 0);
-    min-width: 600px;
+    background-color: #000;
+    min-width: 500px;
     height: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     color: white;
     gap: 24px;
-    padding: 12px;
+    padding: 28px;
+
 }
 
 .status{
@@ -44,7 +56,6 @@
 
 .color-picker{
     border: solid 1px black;
-    border-radius: 8px;
     width: 150px;
     height: 40px;
 }
@@ -58,8 +69,22 @@
     font-weight: 500;
 }
 
+.input-colors{
+    color: var(--text-color);
+    background-color: var(--primary-input);
+}
+
+.HEX-field{
+    font-size: large;
+    padding: 8px;
+    border-radius: 8px;
+    width: 140px;
+}
+
 .small-numbers{
     width: 50px;
+    border-radius: 8px;
+    padding-left: 12px;
 }
 
 .role-settings, .color-settings{
@@ -75,6 +100,8 @@
     gap: 10px;
     border-radius: 8px;
     margin: 12px 0px;
+    background-color: var(--primary-dark);
+    color: var(--text-color);
 }
 
 .dropdown{
