@@ -11,7 +11,32 @@ const RANK_LIST = new Map([
 
 
 const MAX_WIN = 5;
-var CREATED_VARIABLES = []; //Object like arrays of variables for #displayStatusSettings
+
+const KeyColorFieldChrome = document.getElementById('keyColor-chrome');
+KeyColorFieldChrome.onchange = () => {
+    document.getElementById('Display').style.backgroundColor = KeyColorFieldChrome.value;
+    
+    document.getElementById('hex-chrome').value = convertRgbToHex(document.getElementById('Display').style.backgroundColor.toString());
+}
+
+const KeyColorFieldText = document.getElementById('keyColor-text');
+KeyColorFieldText.onchange = () => {
+    document.getElementById('Display').style.color = KeyColorFieldText.value;
+
+    document.getElementById('hex-text').value = convertRgbToHex(document.getElementById('Display').style.color.toString());
+}
+
+const HEXChromeInput = document.getElementById('hex-chrome');
+HEXChromeInput.onchange = () => {
+    KeyColorFieldChrome.value = document.getElementById('hex-chrome').value;
+    document.getElementById('Display').style.backgroundColor = KeyColorFieldChrome.value;
+}
+
+const HEXTextInput = document.getElementById('hex-text');
+HEXTextInput.onchange = () => {
+    KeyColorFieldText.value = document.getElementById('hex-text').value;
+    document.getElementById('Display').style.color = KeyColorFieldText.value;
+}
 
 createInterface();
 
@@ -69,16 +94,6 @@ function createVariablesForDisplayRole(roleName, index){
     </div>
     </div>`;
     b.innerHTML += a;
-    CREATED_VARIABLES.push(
-        {
-            "Tier" : document.getElementById(`rank-tier-dropdown-${index}`),
-            "Division" : document.getElementById(`rank-division-dropdown-${index}`),
-            "WinField" : document.getElementById(`win-input-${index}`),
-            "WinButton" : document.getElementById(`win-button-${index}`),
-            "LostButton" : document.getElementById(`lost-button-${index}`),
-            "TotalGames" : document.getElementById(`total-played-${index}`)
-        }
-    );
 }
 
 function pasteDisplayRole(roleName, index){
@@ -95,15 +110,24 @@ function pasteDisplayRole(roleName, index){
     a.innerHTML = a.innerHTML + htmlBlock;
 }
 
-function assignFunctions(index){
+function convertRgbToHex(rgb) {
+    var separator = rgb.indexOf(",") > -1 ? "," : " ";
 
-    return null;
+    rgb = rgb.substr(4).split(")")[0].split(separator);
+  
+    var r = (+rgb[0]).toString(16),
+      g = (+rgb[1]).toString(16),
+      b = (+rgb[2]).toString(16);
+  
+    if (r.length == 1)
+      r = "0" + r;
+    if (g.length == 1)
+      g = "0" + g;
+    if (b.length == 1)
+      b = "0" + b;
+  
+    return "#" + r + g + b;
 }
-
-//=======TEMP=======
-// const temp = document.getElementById('rank-tier-dropdown-1');
-// temp.onchange = () => switchRank(1);
-//=======TEMP=======
 
 //Assigned to Role Rank DropDown
 function switchRank(index){
@@ -118,16 +142,13 @@ function switchRank(index){
     rankName.textContent = `${activeRank.options[activeRank.selectedIndex].text} ${rankDivision[rankDivision.selectedIndex].text}`;
 }
 
-
-
 function variablesLinking(index){
     // RankDropDownLinking
-    let temp = document.getElementById(`rank-tier-dropdown-${index}`);
-    temp.onchange = () => switchRank(index);
+        let temp = document.getElementById(`rank-tier-dropdown-${index}`);
+        temp.onchange = () => switchRank(index);
 
-    let rankDivision = document.getElementById(`rank-division-dropdown-${index}`)
-    rankDivision.onchange = () => switchRank(index);
-
+        let rankDivision = document.getElementById(`rank-division-dropdown-${index}`)
+        rankDivision.onchange = () => switchRank(index);
     // ================
 
     // WinStatusLinking
@@ -164,28 +185,17 @@ function variablesLinking(index){
     // =================
 }
 
-//TODO
 function addGameToPlayed(index, state){
-    // WinStatusLinking
     let winInput = document.getElementById(`win-input-${index}`);
-
     let winLabel = document.getElementById(`stats-${index}`);
-// =================
-
-// TotalPlayedLinking
     let totalInput = document.getElementById(`total-played-${index}`);
-
     let totalLabel = document.getElementById(`total-${index}`);
-// =================
 
     totalInput.value++;
     totalLabel.textContent = 'Played ' + totalInput.value;
 
-    
     if(state == 'win'){
         winInput.value < MAX_WIN ? winInput.value++ : winInput.value = 0;
         winLabel.textContent = `Win ${winInput.value}/${MAX_WIN}`;
     }
-
-
 }
